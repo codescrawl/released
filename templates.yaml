@@ -34,7 +34,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template Model'
+                $ref: '#/components/schemas/Template'
         '404':
           description: Not Found
       servers:
@@ -74,14 +74,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Template Model'
+              $ref: '#/components/schemas/Template'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template Model'
+                $ref: '#/components/schemas/Template'
       servers:
         - url: 'http://localhost:8080'
           description: Development
@@ -99,7 +99,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Template Model'
+                  $ref: '#/components/schemas/Template'
       servers:
         - url: 'http://localhost:8080'
           description: Development
@@ -113,14 +113,15 @@ components:
       schema:
         type: string
   schemas:
-    Template Model:
+    Template:
       type: object
-      title: Template Model
+      title: Template
       description: Standard model of a template.
       properties:
         id:
           type: string
           format: uuid
+          x-field-extra-annotation: '@jakarta.persistence.Id @jakarta.persistence.GeneratedValue(strategy=jakarta.persistence.GenerationType.AUTO)'
         name:
           type: string
         content:
@@ -128,3 +129,4 @@ components:
       required:
         - name
         - content
+      x-class-extra-annotation: '@jakarta.persistence.Entity'
