@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Template API
+  description: The Template API allows the management of templates withing RapidCX.
+  contact:
+    name: Colin Kirkham
+    url: 'https://www.precisely.com'
+    email: colin.kirkham@precisely.com
+  license:
+    url: 'https://www.precisely.com'
+    name: Proprietary
+servers:
+  - url: 'http://localhost:8080'
+    description: Development
+paths:
+  '/templates/{id}':
+    get:
+      summary: Get Template
+      description: 'Get a single, existing template.'
+      operationId: get-template
+      parameters:
+        - $ref: '#/components/parameters/TenantID'
+        - name: id
+          in: path
+          description: The ID of the template to retrieve
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template Model'
+        '404':
+          description: Not Found
+      servers:
+        - url: 'http://localhost:8080'
+          description: Development
+    delete:
+      summary: Delete Template
+      description: 'Delete a single, existing template.'
+      operationId: delete-template
+      parameters:
+        - $ref: '#/components/parameters/TenantID'
+        - name: id
+          in: path
+          description: The ID of the template to retrieve
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+      servers:
+        - url: 'http://localhost:8080'
+          description: Development
+  /templates:
+    post:
+      summary: ''
+      description: Create a new template
+      operationId: create-template
+      parameters:
+        - $ref: '#/components/parameters/TenantID'
+      requestBody:
+        description: ''
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template Model'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template Model'
+      servers:
+        - url: 'http://localhost:8080'
+          description: Development
+    get:
+      summary: ''
+      description: Get all of the Templates in the system.
+      operationId: get-all-templates
+      parameters:
+        - $ref: '#/components/parameters/TenantID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template Model'
+      servers:
+        - url: 'http://localhost:8080'
+          description: Development
+components:
+  parameters:
+    TenantID:
+      name: Tenant-ID
+      in: header
+      description: The Tenant Id for the client.
+      required: true
+      schema:
+        type: string
+  schemas:
+    Template Model:
+      type: object
+      title: Template Model
+      description: Standard model of a template.
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        content:
+          type: string
+      required:
+        - name
+        - content
